@@ -1,6 +1,6 @@
 // leave off @2x/@3x
 const images = {
-	logo: require("../Images/ignitenb.png"),
+	logo: require("../Images/logo_green.png"),
 	logoDark: require("../Images/ignitenbdark.png"),
 	clearLogo: require("../Images/top_logo.png"),
 	launch: require("../Images/launch-icon.png"),

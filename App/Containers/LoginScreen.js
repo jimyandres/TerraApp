@@ -5,6 +5,7 @@ import Styles from "./Styles/LoginScreenStyles";
 import { Images, Metrics } from "../Themes";
 import LoginActions from "../Redux/LoginRedux";
 import { Button, Text as NBText, Contant, Form, Item, Input, Label } from "native-base";
+import I18n from '../I18n';
 
 class LoginScreen extends React.Component {
 	static propTypes = {
@@ -20,8 +21,8 @@ class LoginScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: "reactnative@infinite.red",
-			password: "password",
+			username: "",
+			password: "",
 			visibleHeight: Metrics.screenHeight,
 			topLogo: { width: Metrics.screenWidth - 40 },
 		};
@@ -54,7 +55,7 @@ class LoginScreen extends React.Component {
 		let newSize = Metrics.screenHeight - e.endCoordinates.height;
 		this.setState({
 			visibleHeight: newSize,
-			topLogo: { width: 100, height: 70 },
+			topLogo: { width: 100, height: 10 },
 		});
 	};
 
@@ -95,15 +96,15 @@ class LoginScreen extends React.Component {
 				keyboardShouldPersistTaps="always"
 			>
 				<Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
-				<View style={Styles.form}>
+				<View style={Styles.formLogin}>
 					<Form>
 						<Item stackedLabel>
-							<Label>Username</Label>
 							<Input
 								ref="username"
+								placeholder={I18n.t('username')}
 								value={username}
 								editable={editable}
-								keyboardType="default"
+								keyboardType="email-address"
 								returnKeyType="next"
 								autoCapitalize="none"
 								autoCorrect={false}
@@ -113,9 +114,9 @@ class LoginScreen extends React.Component {
 							/>
 						</Item>
 						<Item stackedLabel>
-							<Label>Password</Label>
 							<Input
 								ref={ref => (this.password = ref)}
+								placeholder={I18n.t('password')}
 								value={password}
 								editable={editable}
 								keyboardType="default"
@@ -130,17 +131,22 @@ class LoginScreen extends React.Component {
 						</Item>
 					</Form>
 					<View style={[Styles.loginRow]}>
-						<Button style={{ flex: 1, justifyContent: "center" }} full onPress={this.handlePressLogin}>
-							<NBText>Sign In</NBText>
-						</Button>
 						<Button
-							style={{ flex: 1, justifyContent: "center" }}
-							full
-							onPress={() => this.props.navigation.goBack()}
-						>
-							<NBText>Cancel</NBText>
+							style={[Styles.loginButton]}
+							full onPress={this.handlePressLogin}
+							>
+							<NBText>{I18n.t('signIn')}</NBText>
 						</Button>
 					</View>
+					<View style={{ padding:20, alignItems:'center' }}>
+            <Text style={[Styles.text]}>O</Text>
+            <Text style={{ paddingVertical:20}}>
+              ¿No tienes una cuenta?
+              <Text style={[Styles.linkRegister]}>
+                 {' '}Registrate
+              </Text>
+            </Text>
+          </View>
 				</View>
 			</ScrollView>
 		);

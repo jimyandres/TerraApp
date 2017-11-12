@@ -55,7 +55,7 @@ class LoginScreen extends React.Component {
 		let newSize = Metrics.screenHeight - e.endCoordinates.height;
 		this.setState({
 			visibleHeight: newSize,
-			topLogo: { width: 100, height: 10 },
+			topLogo: { width: 150, height: 100 },
 		});
 	};
 
@@ -138,9 +138,9 @@ class LoginScreen extends React.Component {
 							<NBText>{I18n.t('signIn')}</NBText>
 						</Button>
 					</View>
-					<View style={{ padding:20, alignItems:'center' }}>
+					<View style={{ padding:15, alignItems:'center' }}>
             <Text style={[Styles.text]}>O</Text>
-            <Text style={{ paddingVertical:20}}>
+            <Text style={{ paddingVertical:15}}>
               ¿No tienes una cuenta?
               <Text style={[Styles.linkRegister]}>
                  {' '}Registrate

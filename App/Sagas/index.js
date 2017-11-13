@@ -6,14 +6,14 @@ import DebugConfig from '../Config/DebugConfig'
 /* ------------- Types ------------- */
 
 import { StartupTypes } from '../Redux/StartupRedux'
-import { GithubTypes } from '../Redux/GithubRedux'
+// import { GithubTypes } from '../Redux/GithubRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
-import { login } from './LoginSagas'
-import { getUserAvatar } from './GithubSagas'
+import { login, loginLoad } from './LoginSagas'
+// import { getUserAvatar } from './GithubSagas'
 
 /* ------------- API ------------- */
 
@@ -27,9 +27,19 @@ export default function * root () {
   yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
-    takeLatest(LoginTypes.LOGIN_REQUEST, login),
+
+    // takeLatest(LoginTypes.LOGIN_LOAD, loginLoad, api),
+    takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
+    // takeLatest(LoginTypes.LOGOUT_REQUEST, logout, api),
+
+    // takeLatest(RegisterTypes.REGISTER_REQUEST, register, api),
+    // takeLatest(PasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, api),
+    // takeLatest(PasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, api),
 
     // some sagas receive extra parameters in addition to an action
-    takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
+    // takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api),
+
+    // takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, api),
+    // takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, api)
   ])
 }

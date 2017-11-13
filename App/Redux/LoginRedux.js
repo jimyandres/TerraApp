@@ -4,10 +4,13 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  loginRequest: ['username', 'password'],
-  loginSuccess: ['username'],
+  loginRequest: ['email', 'password'],
+  loginSuccess: ['authToken'],
   loginFailure: ['error'],
-  logout: null
+  logoutRequest: null,
+  logoutSuccess: null,
+  loginLoad: [],
+  loginLoadSuccess: []
 })
 
 export const LoginTypes = Types
@@ -16,9 +19,10 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  username: null,
+  authToken: null,
   error: null,
-  fetching: false
+  fetching: false,
+  loading: false
 })
 
 /* ------------- Reducers ------------- */
@@ -27,15 +31,23 @@ export const INITIAL_STATE = Immutable({
 export const request = (state) => state.merge({ fetching: true })
 
 // we've successfully logged in
-export const success = (state, { username }) =>
-  state.merge({ fetching: false, error: null, username })
+export const success = (state, data) => {
+  const { authToken } = data
+  return state.merge({ fetching: false, error: null, authToken })
+}
 
 // we've had a problem logging in
-export const failure = (state, { error }) =>
-  state.merge({ fetching: false, error })
+export const failure = (state, { error }) => state.merge({ fetching: false, error, authToken: null })
+
+// we're attempting to load token from startup sagas
+export const load = (state) => state.merge({ loading: true })
+
+export const loadSuccess = (state) => state.merge({ loading: false })
+// we need to logout, meaning clear access tokens and account
+// export const logoutRequest = state => state
 
 // we've logged out
-export const logout = (state) => INITIAL_STATE
+export const logoutSuccess = state => INITIAL_STATE
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -43,10 +55,13 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_REQUEST]: request,
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
-  [Types.LOGOUT]: logout
+  [Types.LOGIN_LOAD]: load,
+  [Types.LOGIN_LOAD_SUCCESS]: loadSuccess,
+  // [Types.LOGOUT_REQUEST]: logoutRequest,
+  // [Types.LOGOUT_SUCCESS]: logoutSuccess
 })
 
 /* ------------- Selectors ------------- */
 
 // Is the current user logged in?
-export const isLoggedIn = (loginState) => loginState.username !== null
+export const isLoggedIn = (loginState) => loginState.email !== null

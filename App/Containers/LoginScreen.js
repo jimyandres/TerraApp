@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation } from "react-native";
+import { Alert, View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation } from "react-native";
 import { connect } from "react-redux";
 import Styles from "./Styles/LoginScreenStyles";
 import { Images, Metrics } from "../Themes";
@@ -21,7 +21,7 @@ class LoginScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: "",
+			email: "",
 			password: "",
 			visibleHeight: Metrics.screenHeight,
 			topLogo: { width: Metrics.screenWidth - 40 },
@@ -33,7 +33,13 @@ class LoginScreen extends React.Component {
 		this.forceUpdate();
 		// Did the login attempt complete?
 		if (this.isAttempting && !newProps.fetching) {
-			this.props.navigation.goBack();
+			if (newProps.error) {
+        if (newProps.error === 'WRONG') {
+          Alert.alert('Error', 'Invalid login', [{text: 'OK'}])
+        }
+      } else {
+        this.props.navigation.navigate("LaunchScreen");
+      }
 		}
 	}
 
@@ -69,15 +75,15 @@ class LoginScreen extends React.Component {
 	};
 
 	handlePressLogin = () => {
-		// const { username, password } = this.state
-		// this.isAttempting = true
+		const { email, password } = this.state
+		this.isAttempting = true
 		// attempt a login - a saga is listening to pick it up from here.
-		// this.props.attemptLogin(username, password);
-		this.props.navigation.navigate("LaunchScreen");
+		this.props.attemptLogin(email, password);
+		// this.props.navigation.navigate("LaunchScreen");
 	};
 
-	handleChangeUsername = text => {
-		this.setState({ username: text });
+	handleChangeEmail = text => {
+		this.setState({ email: text });
 	};
 
 	handleChangePassword = text => {
@@ -85,7 +91,7 @@ class LoginScreen extends React.Component {
 	};
 
 	render() {
-		const { username, password } = this.state;
+		const { email, password } = this.state;
 		const { fetching } = this.props;
 		const editable = !fetching;
 		const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly;
@@ -100,15 +106,15 @@ class LoginScreen extends React.Component {
 					<Form>
 						<Item stackedLabel>
 							<Input
-								ref="username"
-								placeholder={I18n.t('username')}
-								value={username}
+								ref="email"
+								placeholder={I18n.t('email')}
+								value={email}
 								editable={editable}
 								keyboardType="email-address"
 								returnKeyType="next"
 								autoCapitalize="none"
 								autoCorrect={false}
-								onChangeText={this.handleChangeUsername}
+								onChangeText={this.handleChangeEmail}
 								underlineColorAndroid="transparent"
 								onSubmitEditing={() => this.password._root.focus()}
 							/>
@@ -143,7 +149,7 @@ class LoginScreen extends React.Component {
             <Text style={{ paddingVertical:15}}>
               ¿No tienes una cuenta?
               <Text style={[Styles.linkRegister]}>
-                 {' '}Registrate
+                 {' '}Regístrate
               </Text>
             </Text>
           </View>
@@ -156,12 +162,13 @@ class LoginScreen extends React.Component {
 const mapStateToProps = state => {
 	return {
 		fetching: state.login.fetching,
+    error: state.login.error
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
+		attemptLogin: (email, password) => dispatch(LoginActions.loginRequest(email, password)),
 	};
 };
 

@@ -1,6 +1,9 @@
 {
    "signIn": "Sign In",
    "logOut": "Log Out",
+   "register": "Register",
+   "now": "now",
+   "noAccount":"Not a member yet?",
    "loginLogoutExampleTitle": "Login/Logout Redux + Sagas Example",
    "progressiveImageComponent": "Progressive Image Component",
    "api": "API",
@@ -9,7 +12,7 @@
    "loginWithFacebook": "Login with Facebook",
    "rni18n": "RN i18n",
    "igniteGenerated": "Ignite Generate Screens",
-   "forgotPassword": "Forgot Password",
+   "forgotPassword": "Forgot Password?",
    "email": "Mail",
    "password": "Password",
    "cancel": "Cancel",

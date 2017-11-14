@@ -147,9 +147,9 @@ class LoginScreen extends React.Component {
 					<View style={{ padding:15, alignItems:'center' }}>
             <Text style={[Styles.text]}>O</Text>
             <Text style={{ paddingVertical:15}}>
-              ¿No tienes una cuenta?
+              {I18n.t('noAccount')}
               <Text style={[Styles.linkRegister]}>
-                 {' '}Regístrate
+                 {' '}{I18n.t('register')} {I18n.t('now')}
               </Text>
             </Text>
           </View>

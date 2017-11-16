@@ -35,26 +35,6 @@ class HomeScreen extends Component {
 
   isAttempting = false;
 
-  // _renderProduct = ({ item }) => {
-  //   return (
-  //     <Card style={{ flex: 0 }}>
-  //       <CardItem header>
-  //         <Image
-  //           style={{ resizeMode: "cover", height: 100, flex: 1 }}
-  //           source={{ uri: item.fotos[0].url }}
-  //         />
-  //       </CardItem>
-  //       <CardItem style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-  //         <Text style={styles.h6}>{item.nombre}</Text>
-  //         <Text note style={styles.text}>${item.precioEmpaque}</Text>
-  //       </CardItem>
-  //       <CardItem>
-  //         <Text style={styles.description}>{item.descripcion}</Text>
-  //       </CardItem>
-  //     </Card>
-  //   );
-  // };
-
   constructor(props) {
 		super(props);
 
@@ -70,15 +50,6 @@ class HomeScreen extends Component {
 
 		this.isAttempting = false;
 	}
-  // <Image
-  // style={{ resizeMode: "cover", height: 100, flex: 1 }}
-  // source={{ uri: item.fotos[0].url }}
-  // />
-  // <View>
-  //   <Text style={styles.boldLabel}>{item.nombre}</Text>
-  //   <Text note style={styles.label}>${item.precioEmpaque}</Text>
-  //   <Text style={styles.description}>{item.descripcion}</Text>
-  // </View>
 
   renderHeader() {
     const image_header = 'http://www.terraquimbaya.com/img/ImagenesTerra/DSCN7055.JPG';
@@ -99,7 +70,7 @@ class HomeScreen extends Component {
       </View>);
   }
 
-  renderRow (item) {
+  renderRow ({ item, index }) {
     return (
         <Card style={styles.row}>
           <CardItem cardBody>
@@ -149,6 +120,10 @@ class HomeScreen extends Component {
     this.isAttempting = true
     this.props.fetchProducts();
   }
+
+  renderItem({ item, index }) {
+    return <Text style={styles.row}>{item.nombre}</Text>;
+  }
   render () {
     return (
       <Container>
@@ -170,14 +145,14 @@ class HomeScreen extends Component {
 
         <Content>
           <AlertMessage title='Nothing to See Here, Move Along' show={this.noRowData()} />
-          <ListView
-            contentContainerStyle={styles.listContent}
-            dataSource={this.state.dataSource}
-            renderHeader={this.renderHeader.bind(this)}
-            renderRow={this.renderRow}
-            pageSize={15}
-            enableEmptySections
+
+          <FlatList
+            ListHeaderComponent={this.renderHeader.bind(this)}
+            data={this.props.data}
+            numColumns={2}
+            renderItem={this.renderRow}
           />
+
         </Content>
 
       </Container>
@@ -185,7 +160,6 @@ class HomeScreen extends Component {
   }
 }
 
-// <FlatList data={this.props.data} keyExtractor={product => product.idPublicacion} renderItem={this._renderProduct} contentContainerStyle={{margin:0}} numColumns={2} />
 const mapStateToProps = state => {
 	return {
 		fetching: state.home.fetching,

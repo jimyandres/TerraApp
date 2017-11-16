@@ -15,6 +15,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
+    width: '50%',
     // backgroundColor: Colors.ricePaper,
     borderRadius: Metrics.smallMargin
   },
@@ -29,11 +30,6 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
     color: Colors.primary,
     textAlign: 'left',
-  },
-  listContent: {
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   header: {
     backgroundColor: Colors.primary,

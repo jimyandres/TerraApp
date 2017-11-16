@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { BackHandler, Alert, FlatList, Image, ListView, View } from 'react-native'
+import { BackHandler, Alert, FlatList, Image, ListView, View, StatusBar } from 'react-native'
 import {
   Content,
   Container,
@@ -16,7 +16,6 @@ import {
   Card,
   CardItem,
   ListItem,
-  StatusBar
 } from 'native-base'
 import { connect } from "react-redux";
 import HomeActions from "../Redux/HomeRedux";
@@ -24,7 +23,8 @@ import HomeActions from "../Redux/HomeRedux";
 import AlertMessage from '../Components/AlertMessage'
 
 // Styles
-import styles from './Styles/HomeScreenStyle'
+import styles from './Styles/HomeScreenStyle';
+import Colors from '../Themes/Colors';
 
 class HomeScreen extends Component {
   static propTypes = {
@@ -114,8 +114,10 @@ class HomeScreen extends Component {
   render () {
     const products = this.props.data ? this.props.data.products.data : []
     return (
+
       <Container>
         <Header style={styles.header}>
+          <StatusBar backgroundColor={Colors.primaryStatusBar} />
           <Left>
             <Button
               transparent

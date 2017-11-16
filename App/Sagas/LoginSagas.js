@@ -17,7 +17,7 @@ export function * login (api, { email, password }) {
     // yield put(AccountActions.accountRequest())
     yield put({ type: 'RELOGIN_OK' })
   } else {
-    yield put(LoginActions.loginFailure('WRONG'))
+    yield put(LoginActions.loginFailure(response.data))
   }
 }
 

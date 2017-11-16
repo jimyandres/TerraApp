@@ -34,8 +34,8 @@ class LoginScreen extends React.Component {
 		// Did the login attempt complete?
 		if (this.isAttempting && !newProps.fetching) {
 			if (newProps.error) {
-        if (newProps.error === 'WRONG') {
-          Alert.alert('Error', 'Invalid login', [{text: 'OK'}])
+        if (newProps.error.status === 'failed') {
+          Alert.alert('Error', newProps.error.message, [{text: 'OK'}])
         }
       } else {
         this.props.navigation.navigate("NavigationDrawer");

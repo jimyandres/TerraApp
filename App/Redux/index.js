@@ -7,6 +7,7 @@ export const reducers = combineReducers({
   nav: require('./NavigationRedux').reducer,
 
   login: require('./LoginRedux').reducer,
+  home: require('./HomeRedux').reducer,
   // register: require('./RegisterRedux').reducer,
   search: require('./SearchRedux').reducer
 })

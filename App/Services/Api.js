@@ -37,6 +37,8 @@ const create = (baseURL = AppConfig.apiUrl) => {
   // way at this level.
   //
 
+  const home = () => api.get('api/home')
+
   // const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   // const removeAuthToken = () => api.setHeader('Authorization', '')
   const login = (userAuth) => api.post('api/login', userAuth)
@@ -64,6 +66,8 @@ const create = (baseURL = AppConfig.apiUrl) => {
     // getRoot,
     // getRate,
     // getUser
+
+    home,
 
     // setAuthToken,
     // removeAuthToken,

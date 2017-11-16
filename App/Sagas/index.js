@@ -8,11 +8,13 @@ import DebugConfig from '../Config/DebugConfig'
 import { StartupTypes } from '../Redux/StartupRedux'
 // import { GithubTypes } from '../Redux/GithubRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
+import { HomeTypes } from '../Redux/HomeRedux'
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
 import { login, loginLoad } from './LoginSagas'
+import { home } from './HomeSagas'
 // import { getUserAvatar } from './GithubSagas'
 
 /* ------------- API ------------- */
@@ -27,6 +29,8 @@ export default function * root () {
   yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
+
+    takeLatest(HomeTypes.HOME_REQUEST, home, api),
 
     // takeLatest(LoginTypes.LOGIN_LOAD, loginLoad, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),

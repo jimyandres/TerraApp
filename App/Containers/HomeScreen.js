@@ -1,10 +1,25 @@
 import React, { Component, PropTypes } from 'react'
 import { BackHandler, Alert, FlatList, Image, ListView, View } from 'react-native'
-import { Content, Container, Header, Left, Right, Body, Button, Text, Title, Icon, Footer, FooterTab, Card, CardItem, ListItem } from 'native-base'
+import {
+  Content,
+  Container,
+  Header,
+  Left,
+  Right,
+  Body,
+  Button,
+  Text,
+  Title,
+  Icon,
+  Footer,
+  FooterTab,
+  Card,
+  CardItem,
+  ListItem,
+  StatusBar
+} from 'native-base'
 import { connect } from "react-redux";
 import HomeActions from "../Redux/HomeRedux";
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
 
 import AlertMessage from '../Components/AlertMessage'
 
@@ -64,6 +79,26 @@ class HomeScreen extends Component {
   //   <Text note style={styles.label}>${item.precioEmpaque}</Text>
   //   <Text style={styles.description}>{item.descripcion}</Text>
   // </View>
+
+  renderHeader() {
+    const image_header = 'http://www.terraquimbaya.com/img/ImagenesTerra/DSCN7055.JPG';
+    const availability = this.props.data ? 'Productos disponibles' : 'No hay productos diponibles en este momento';
+    return (
+      <View style={styles.content_header_list}>
+        <View style={styles.header_list}>
+          <Image style={styles.header_list_image} source={{ uri: image_header }} />
+          <View style={styles.header_list_text}>
+            <Image style={styles.header_list_logo} source={require('../Images/logo_white.png')} />
+            <Text style={styles.header_list_title}>Terra Quimbaya</Text>
+            <Text style={styles.header_list_sub}>Bienvenido</Text>
+          </View>
+        </View>
+        <View style={{alignItems: 'center', paddingBottom: 15}}>
+          <Text style={styles.content_list_title}>{ availability }</Text>
+        </View>
+      </View>);
+  }
+
   renderRow (item) {
     return (
         <Card style={styles.row}>
@@ -133,12 +168,12 @@ class HomeScreen extends Component {
 
         </Header>
 
-        <Content padder>
-          <Text>Productos Disponibles</Text>
+        <Content>
           <AlertMessage title='Nothing to See Here, Move Along' show={this.noRowData()} />
           <ListView
             contentContainerStyle={styles.listContent}
             dataSource={this.state.dataSource}
+            renderHeader={this.renderHeader.bind(this)}
             renderRow={this.renderRow}
             pageSize={15}
             enableEmptySections

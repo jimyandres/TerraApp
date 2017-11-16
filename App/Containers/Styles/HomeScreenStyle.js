@@ -3,8 +3,6 @@ import { ApplicationStyles, Fonts, Colors, Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  ...Fonts.style,
-  ...Colors.colors,
   container: {
     flex: 1,
     marginTop: Metrics.navBarHeight,
@@ -36,5 +34,8 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  header: {
+    backgroundColor: Colors.primary,
   }
 })

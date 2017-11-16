@@ -69,13 +69,14 @@ class HomeScreen extends Component {
         <Card style={styles.row}>
           <CardItem cardBody>
             <Image
-            style={{ resizeMode: "cover", height: 150, flex: 1}}
+            style={{ resizeMode: "cover", height: 125, flex: 1}}
               source={{ uri: item.fotos[0].url }}
             />
           </CardItem>
           <CardItem style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
             <Text note style={[styles.label, { alignItems: 'flex-start',justifyContent: 'flex-start' }]}>${item.precioEmpaque}</Text>
             <Text style={[styles.boldLabel, { alignItems: 'flex-start', justifyContent: 'flex-start' }]}>{item.nombre}</Text>
+            <Text note numberOfLines={2}>{item.descripcion}</Text>
           </CardItem>
         </Card>
     )
@@ -116,7 +117,7 @@ class HomeScreen extends Component {
   render () {
     return (
       <Container>
-        <Header>
+        <Header style={styles.header}>
           <Left>
             <Button
               transparent
@@ -149,7 +150,7 @@ class HomeScreen extends Component {
   }
 }
 
-// <FlatList data={this.props.data} keyExtractor={product => product.idPublicacion} renderItem={this._renderProduct} pageSize={15} />
+// <FlatList data={this.props.data} keyExtractor={product => product.idPublicacion} renderItem={this._renderProduct} contentContainerStyle={{margin:0}} numColumns={2} />
 const mapStateToProps = state => {
 	return {
 		fetching: state.home.fetching,

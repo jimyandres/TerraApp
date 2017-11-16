@@ -25,7 +25,6 @@ import AlertMessage from '../Components/AlertMessage'
 
 // Styles
 import styles from './Styles/HomeScreenStyle'
-// import styles from './Styles/ListviewGridExampleStyles'
 
 class HomeScreen extends Component {
   static propTypes = {
@@ -38,22 +37,12 @@ class HomeScreen extends Component {
   constructor(props) {
 		super(props);
 
-    const rowHasChanged = (r1, r2) => r1 !== r2
-
-    // DataSource configured
-    const ds = new ListView.DataSource({rowHasChanged})
-
-    // Datasource is always in state
-    this.state = {
-      dataSource: ds.cloneWithRows(props.data)
-    }
-
 		this.isAttempting = false;
 	}
 
-  renderHeader() {
+  renderHeader = () => {
     const image_header = 'http://www.terraquimbaya.com/img/ImagenesTerra/DSCN7055.JPG';
-    const availability = this.props.data ? 'Productos disponibles' : 'No hay productos diponibles en este momento';
+    const availability = this.noRowData() ? 'No hay productos diponibles en este momento' : 'Productos disponibles';
     return (
       <View style={styles.content_header_list}>
         <View style={styles.header_list}>
@@ -89,14 +78,9 @@ class HomeScreen extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-		// this.forceUpdate();
-    if (newProps.data) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(newProps.data)
-      })
-    }
-		// Did the login attempt complete?
+		// Did the products fetch attempt complete?
 		if (this.isAttempting && !newProps.fetching) {
+      this.isAttempting = false
 			if (newProps.error) {
         if (newProps.error.status === 'failed') {
           Alert.alert('Error', newProps.error.message, [{text: 'OK'}])
@@ -107,8 +91,8 @@ class HomeScreen extends Component {
 
   // Used for friendly AlertMessage
   // returns true if the dataSource is empty
-  noRowData () {
-    return this.state.dataSource.getRowCount() === 0
+  noRowData = () => {
+    return !this.props.data || this.props.data.products.total === 0
   }
 
   componentDidMount () {
@@ -124,7 +108,9 @@ class HomeScreen extends Component {
   renderItem({ item, index }) {
     return <Text style={styles.row}>{item.nombre}</Text>;
   }
+
   render () {
+    const products = this.props.data ? this.props.data.products.data : []
     return (
       <Container>
         <Header style={styles.header}>
@@ -144,13 +130,12 @@ class HomeScreen extends Component {
         </Header>
 
         <Content>
-          <AlertMessage title='Nothing to See Here, Move Along' show={this.noRowData()} />
-
           <FlatList
-            ListHeaderComponent={this.renderHeader.bind(this)}
-            data={this.props.data}
+            ListHeaderComponent={this.renderHeader}
+            data={products}
             numColumns={2}
             renderItem={this.renderRow}
+            ListEmptyComponent={<AlertMessage title='Nothing to See Here, Move Along' show={this.noRowData()} />}
           />
 
         </Content>
@@ -164,7 +149,7 @@ const mapStateToProps = state => {
 	return {
 		fetching: state.home.fetching,
     error: state.home.error,
-    data: state.home.data ? state.home.data.products.data : []
+    data: state.home.data ? state.home.data : null
 	};
 };
 

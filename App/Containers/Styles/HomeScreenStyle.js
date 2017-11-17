@@ -9,27 +9,26 @@ export default StyleSheet.create({
     backgroundColor: Colors.background
   },
   row: {
-    flex: 1,
-    width: 250,
-    height: 250,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    width: '50%',
+    // flex: 1,
+    // width: 250,
+    // height: 250,
+    // flexDirection: 'column',
+    justifyContent: 'space-around',
+    // alignItems: 'center',
     // backgroundColor: Colors.ricePaper,
-    borderRadius: Metrics.smallMargin
+    // borderRadius: Metrics.baseMargin
   },
   boldLabel: {
     fontWeight: 'bold',
-    alignSelf: 'flex-start',
+    // alignSelf: 'flex-start',
     color: Colors.coal,
-    textAlign: 'left',
+    // textAlign: 'left',
     marginBottom: Metrics.smallMargin
   },
   label: {
-    alignSelf: 'flex-start',
+    // alignSelf: 'flex-start',
     color: Colors.primary,
-    textAlign: 'left',
+    // textAlign: 'left',
   },
   header: {
     backgroundColor: Colors.primary,

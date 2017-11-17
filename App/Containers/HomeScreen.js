@@ -21,6 +21,8 @@ import {
 import { connect } from "react-redux";
 import HomeActions from "../Redux/HomeRedux";
 
+import ConvertToMoney from "../Transforms/ConvertToMoney"
+
 import AlertMessage from '../Components/AlertMessage'
 
 // Styles
@@ -63,19 +65,21 @@ class HomeScreen extends Component {
 
   renderRow ({ item, index }) {
     return (
-        <Card style={styles.row}>
-          <CardItem cardBody>
-            <Image
-            style={{ resizeMode: "cover", height: 125, flex: 1}}
-              source={{ uri: item.fotos[0].url }}
-            />
-          </CardItem>
-          <CardItem style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-            <Text note style={[styles.label, { alignItems: 'flex-start',justifyContent: 'flex-start' }]}>${item.precioEmpaque}</Text>
-            <Text style={[styles.boldLabel, { alignItems: 'flex-start', justifyContent: 'flex-start' }]}>{item.nombre}</Text>
-            <Text note numberOfLines={2}>{item.descripcion}</Text>
-          </CardItem>
-        </Card>
+      <Card style={styles.row}>
+        <CardItem cardBody>
+          <Image
+          style={{ resizeMode: "cover", height: 125, flex: 1}}
+            source={{ uri: item.fotos[0].url }}
+          />
+        </CardItem>
+        <CardItem style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'stretch' }}>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Text style={[styles.boldLabel]}>{item.nombre}</Text>
+            <Text note style={[styles.label]}>$ {ConvertToMoney(item.precioEmpaque, 2, ',', '.')}</Text>
+          </View>
+          <Text note numberOfLines={2}>{item.descripcion}</Text>
+        </CardItem>
+      </Card>
     )
   }
 
@@ -107,12 +111,9 @@ class HomeScreen extends Component {
     this.props.fetchProducts();
   }
 
-  renderItem({ item, index }) {
-    return <Text style={styles.row}>{item.nombre}</Text>;
-  }
-
   render () {
     const products = this.props.data ? this.props.data.products.data : []
+
     return (
       <Container>
         <Header style={styles.header}>

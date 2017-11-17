@@ -1,32 +1,23 @@
 import React, { Component, PropTypes } from 'react'
 import { BackHandler, Alert, FlatList, Image, ListView, View, StatusBar } from 'react-native'
-import {
-  Content,
-  Container,
-  Header,
-  Left,
-  Right,
-  Body,
-  Button,
-  Text,
-  Title,
-  Icon,
-  Footer,
-  FooterTab,
-  Card,
-  CardItem,
-  ListItem,
-} from 'native-base'
+import { Content, Container, Header, Left, Right, Body, Button, Text, Title, Icon, Card, CardItem } from 'native-base'
 import { connect } from "react-redux";
 import HomeActions from "../Redux/HomeRedux";
 
 import AlertMessage from '../Components/AlertMessage'
+import {Icon as VectorIcon} from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import I18n from '../I18n';
 
 // Styles
 import styles from './Styles/HomeScreenStyle';
 import Colors from '../Themes/Colors';
 
 class HomeScreen extends Component {
+  // static navigationOptions = {
+  //   drawerLabel: I18n.t('HomeScreenDrawerLabel'),
+  //   drawerIcon: ({ tintColor }) => (<VectorIcon name="coffee" size={25} color="#0F6D38"/>),
+  // }
+
   static propTypes = {
 		dispatch: PropTypes.func,
 		fetching: PropTypes.bool,

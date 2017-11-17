@@ -6,9 +6,16 @@ import CardExample from "../Containers/CardExample";
 import DrawerContent from "../Containers/DrawerContent";
 
 import styles from "./Styles/NavigationStyles";
+import I18n from '../I18n';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 const DrawerRoutes = {
-  	HomeScreen: { screen: HomeScreen },
+  	HomeScreen: { screen: HomeScreen,
+      navigationOptions: {
+      drawerLabel: I18n.t('HomeScreenDrawerLabel'),
+      drawerIcon: ({ tintColor }) => (<Icon name="coffee" size={25} color="#0F6D38"/>),
+    }
+  },
 		ListviewExample: { screen: ListviewExample },
 		CardExample: { screen: CardExample },
 	}
@@ -18,9 +25,6 @@ const RouteConfigs = {
   contentComponent: (props) => <DrawerContent {...props} />,
   contentOptions: {
     activeTintColor: '#0F6D38',
-    itemsContainerStyle: {
-      marginVertical: 2,
-    },
   }
 
 

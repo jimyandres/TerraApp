@@ -6,11 +6,15 @@ import styles from "./Styles/DrawerContentStyles";
 import { Images } from "../Themes";
 import { DrawerItems } from 'react-navigation';
 
+import I18n from '../I18n';
+
 class DrawerContent extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Image source={Images.logoDark} style={styles.logo} />
+				<View style={styles.drawer_header}>
+					<Text style={styles.header_list_title}>{I18n.t('welcome')}</Text>
+				</View>
 				<Content>
 					<DrawerItems {...this.props} />
 				</Content>

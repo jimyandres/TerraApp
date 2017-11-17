@@ -16,6 +16,14 @@ const DrawerRoutes = {
 const RouteConfigs = {
   initialRouteName: "HomeScreen",
   contentComponent: (props) => <DrawerContent {...props} />,
+  contentOptions: {
+    activeTintColor: '#0F6D38',
+    itemsContainerStyle: {
+      marginVertical: 2,
+    },
+  }
+
+
 }
 
 const NavigationDrawer = DrawerNavigator(DrawerRoutes,RouteConfigs);

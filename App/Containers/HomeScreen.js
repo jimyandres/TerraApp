@@ -59,7 +59,7 @@ class HomeScreen extends Component {
     this.props.navigation.navigate('ProductScreen');
   }
 
-  renderRow ({ item, index }) {
+  renderRow = ({ item, index }) => {
     return (
       <Card style={styles.row}>
         <TouchableOpacity onPress={() => this.getProduct(index)}>
@@ -138,7 +138,7 @@ class HomeScreen extends Component {
             keyExtractor={this._keyExtractor}
             data={products}
             numColumns={2}
-            renderItem={this.renderRow.bind(this)}
+            renderItem={this.renderRow}
             ListEmptyComponent={<AlertMessage title='Nothing to See Here, Move Along' show={this.noRowData()} />}
           />
 

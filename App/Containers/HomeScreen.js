@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { BackHandler, Alert, FlatList, Image, ListView, View, StatusBar } from 'react-native'
+import { BackHandler, Alert, FlatList, Image, ListView, View, StatusBar, TouchableOpacity } from 'react-native'
 import { Content, Container, Header, Left, Right, Body, Button, Text, Title, Icon, Card, CardItem } from 'native-base'
 import { connect } from "react-redux";
 import HomeActions from "../Redux/HomeRedux";
@@ -54,22 +54,29 @@ class HomeScreen extends Component {
       </View>);
   }
 
+  getProduct(index) {
+    // console.warn("index", index);
+    this.props.navigation.navigate('ProductScreen');
+  }
+
   renderRow ({ item, index }) {
     return (
       <Card style={styles.row}>
-        <CardItem cardBody>
-          <Image
-          style={{ resizeMode: "cover", height: 125, flex: 1}}
-            source={{ uri: item.fotos[0].url }}
-          />
-        </CardItem>
-        <CardItem style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'stretch' }}>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
-            <Text style={[styles.boldLabel]}>{item.nombre}</Text>
-            <Text note style={[styles.label]}>$ {ConvertToMoney(item.precioEmpaque, 2, ',', '.')}</Text>
-          </View>
-          <Text note numberOfLines={2}>{item.descripcion}</Text>
-        </CardItem>
+        <TouchableOpacity onPress={() => this.getProduct(index)}>
+          <CardItem cardBody>
+            <Image
+            style={{ resizeMode: "cover", height: 125, flex: 1}}
+              source={{ uri: item.fotos[0].url }}
+            />
+          </CardItem>
+          <CardItem style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'stretch' }}>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
+              <Text style={[styles.boldLabel]}>{item.nombre}</Text>
+              <Text note style={[styles.label]}>$ {ConvertToMoney(item.precioEmpaque, 2, ',', '.')}</Text>
+            </View>
+            <Text note numberOfLines={2}>{item.descripcion}</Text>
+          </CardItem>
+        </TouchableOpacity>
       </Card>
     )
   }
@@ -131,7 +138,7 @@ class HomeScreen extends Component {
             keyExtractor={this._keyExtractor}
             data={products}
             numColumns={2}
-            renderItem={this.renderRow}
+            renderItem={this.renderRow.bind(this)}
             ListEmptyComponent={<AlertMessage title='Nothing to See Here, Move Along' show={this.noRowData()} />}
           />
 

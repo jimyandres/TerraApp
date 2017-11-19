@@ -18,7 +18,12 @@ const HomeNavigation = StackNavigator({
         drawerIcon: ({ tintColor }) => (<Icon name="coffee" size={25} color="#0F6D38"/>),
       }
     },
-    ProductScreen: { screen: ProductScreen },
+    ProductScreen: {
+      screen: ProductScreen,
+      navigationOptions: {
+        drawerLockMode: 'locked-closed'
+      }
+    },
   },
   {
     initialRouteName: "HomeScreen",
